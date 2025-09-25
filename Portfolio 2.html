@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bett's Portfolio | Developer & Tech Innovator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    :root {
+      --primary: #0d7377;
+      --primary-dark: #0a5c5f;
+      --secondary: #32e0c4;
+      --dark: #212121;
+      --light: #f9f9f9;
+      --gray: #eeeeee;
+      --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+    
+    body, html {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+
+    .splash-screen, .main-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      transition: opacity 1s ease;
+    }
+
+    .splash-screen {
+      height: 100vh;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      text-align: center;
+    }
+
+    .splash-screen .profile-pic {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .splash-content h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    
+    .splash-content p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      max-width: 500px;
+      margin: 0 auto 30px;
+    }
+
+    .spinner {
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-top: 4px solid white;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .main-content {
+      opacity: 0;
+      z-index: 1;
+    }
+
+    .main-content.visible {
+      opacity: 1;
+    }
+
+    /* Header & Navigation */
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 99;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+    }
+    
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo i {
+      margin-right: 10px;
+      color: var(--secondary);
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+    
+    nav ul li {
+      margin-left: 2rem;
+    }
+    
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+      position: relative;
+    }
+    
+    nav ul li a:hover {
+      color: var(--secondary);
+    }
+    
+    nav ul li a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--secondary);
+      transition: var(--transition);
+    }
+    
+    nav ul li a:hover::after {
+      width: 100%;
+    }
+    
+    .mobile-menu {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(rgba(13, 115, 119, 0.9), rgba(13, 115, 119, 0.8)), url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-align: center;
+      padding: 6rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .hero .profile-pic {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid rgba(255, 255, 255, 0.3);
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+    
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+    
+    .hero p {
+      font-size: 1.3rem;
+      max-width: 600px;
+      margin-bottom: 2rem;
+    }
+    
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    /* Sections */
+    section {
+      padding: 5rem 1rem;
+    }
+    
+    .section-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    
+    .section-title h2 {
+      color: var(--primary);
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .section-title h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: var(--secondary);
+      border-radius: 2px;
+    }
+    
+    .section-title p {
+      max-width: 700px;
+      margin: 0 auto;
+      color: #666;
+    }
+
+    /* About Section */
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    
+    .about-text p {
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+    
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    
+    .stat {
+      text-align: center;
+      padding: 1.5rem;
+      background: white;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+    
+    .stat:hover {
+      transform: translateY(-5px);
+    }
+    
+    .stat i {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+    
+    .stat h3 {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    /* Skills Section */
+    .skills-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    
+    .skill-category {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+    
+    .skill-category:hover {
+      transform: translateY(-5px);
+    }
+    
+    .skill-category h3 {
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .skill-category h3 i {
+      margin-right: 10px;
+      color: var(--secondary);
+    }
+    
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    
+    .skill-tag {
+      background: var(--gray);
+      padding: 0.5rem 1rem;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+    
+    .skill-tag:hover {
+      background: var(--secondary);
+      color: white;
+    }
+
+    /* Projects Section */
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+    
+    .project-card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+    
+    .project-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+    
+    .project-img {
+      height: 200px;
+      background-size: cover;
+      background-position: center;
+    }
+    
+    .project-content {
+      padding: 1.5rem;
+    }
+    
+    .project-content h3 {
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+    
+    .project-content p {
+      margin-bottom: 1.5rem;
+      color: #666;
+    }
+    
+    .project-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    /* Contact Section */
+    .contact-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+    
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .contact-item i {
+      font-size: 1.5rem;
+      color: var(--primary);
+      width: 50px;
+      height: 50px;
+      background: var(--gray);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .contact-form {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-family: 'Poppins', sans-serif;
+      transition: var(--transition);
+    }
+    
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    
+    .form-group textarea {
+      height: 150px;
+      resize: vertical;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 1.8rem;
+      background: var(--primary);
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: 500;
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+    }
+    
+    .btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+    
+    .btn-secondary {
+      background: var(--secondary);
+      color: var(--dark);
+    }
+    
+    .btn-secondary:hover {
+      background: #2ac8ad;
+    }
+    
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+    }
+    
+    .btn-outline:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--dark);
+      color: white;
+      padding: 3rem 1rem;
+      text-align: center;
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    .footer-section h3 {
+      margin-bottom: 1.5rem;
+      color: var(--secondary);
+    }
+    
+    .footer-section p {
+      margin-bottom: 1rem;
+      opacity: 0.8;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+    
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      color: white;
+      transition: var(--transition);
+    }
+    
+    .social-links a:hover {
+      background: var(--secondary);
+      transform: translateY(-3px);
+    }
+    
+    .copyright {
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 992px) {
+      .about-content {
+        grid-template-columns: 1fr;
+      }
+      
+      .contact-container {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .header-container {
+        padding: 0 1rem;
+      }
+      
+      nav ul {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: var(--primary-dark);
+        flex-direction: column;
+        padding: 1rem 0;
+        text-align: center;
+      }
+      
+      nav ul.active {
+        display: flex;
+      }
+      
+      nav ul li {
+        margin: 0.5rem 0;
+      }
+      
+      .mobile-menu {
+        display: block;
+      }
+      
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero p {
+        font-size: 1.1rem;
+      }
+      
+      .about-stats {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .hero {
+        padding: 4rem 1rem;
+      }
+      
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      section {
+        padding: 3rem 1rem;
+      }
+      
+      .projects {
+        grid-template-columns: 1fr;
+      }
+      
+      .hero-btns {
+        flex-direction: column;
+        width: 100%;
+        max-width: 300px;
+      }
+      
+      .hero-btns .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Splash screen -->
+  <div class="splash-screen" id="splash">
+    <div class="splash-content">
+      <img src="https://i.ibb.co/chZcYSVh/your-image.jpg" alt="Bett" class="profile-pic" />
+      <h1>Bett's Portfolio</h1>
+      <p>Building smart apps & real-world tech solutions</p>
+      <div class="spinner"></div>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div class="main-content" id="main">
+    <header>
+      <div class="header-container">
+        <div class="logo">
+          <i class="fas fa-code"></i>
+          <span>Bett</span>
+        </div>
+        <div class="mobile-menu">
+          <i class="fas fa-bars"></i>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <section class="hero" id="home">
+      <img src="https://i.ibb.co/chZcYSVh/your-image.jpg" alt="Bett Profile" class="profile-pic">
+      <h1>Hi, I'm Bett</h1>
+      <p>I build smart applications and real-world technology solutions that solve complex problems</p>
+      <div class="hero-btns">
+        <a href="#projects" class="btn">View My Work</a>
+        <a href="#contact" class="btn btn-outline">Get In Touch</a>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="section-container">
+        <div class="section-title">
+          <h2>About Me</h2>
+          <p>Learn more about my background, experience, and passion for technology</p>
+        </div>
+        <div class="about-content">
+          <div class="about-text">
+            <p>
+              I'm a passionate developer focused on solving real-life problems through technology.
+              With a strong foundation in both frontend and backend development, I specialize in creating
+              mobile and web applications that make a difference.
+            </p>
+            <p>
+              I'm currently working on innovative projects including smart waste management systems,
+              fraud detection dashboards, and the Mchango fundraiser platform that helps communities
+              achieve their financial goals.
+            </p>
+            <p>
+              My approach combines technical expertise with user-centered design to create solutions
+              that are not only functional but also intuitive and enjoyable to use.
+            </p>
+          </div>
+          <div class="about-stats">
+            <div class="stat">
+              <i class="fas fa-project-diagram"></i>
+              <h3>15+</h3>
+              <p>Projects Completed</p>
+            </div>
+            <div class="stat">
+              <i class="fas fa-clock"></i>
+              <h3>3+</h3>
+              <p>Years Experience</p>
+            </div>
+            <div class="stat">
+              <i class="fas fa-users"></i>
+              <h3>10+</h3>
+              <p>Happy Clients</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="section-container">
+        <div class="section-title">
+          <h2>My Skills</h2>
+          <p>Technologies and tools I use to bring ideas to life</p>
+        </div>
+        <div class="skills-container">
+          <div class="skill-category">
+            <h3><i class="fas fa-code"></i> Frontend Development</h3>
+            <div class="skills-list">
+              <span class="skill-tag">HTML5</span>
+              <span class="skill-tag">CSS3</span>
+              <span class="skill-tag">JavaScript</span>
+              <span class="skill-tag">React</span>
+              <span class="skill-tag">Bootstrap</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3><i class="fas fa-server"></i> Backend Development</h3>
+            <div class="skills-list">
+              <span class="skill-tag">Node.js</span>
+              <span class="skill-tag">Firebase</span>
+              <span class="skill-tag">MongoDB</span>
+              <span class="skill-tag">API Integration</span>
+              <span class="skill-tag">M-Pesa Integration</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3><i class="fas fa-mobile-alt"></i> Mobile Development</h3>
+            <div class="skills-list">
+              <span class="skill-tag">Cordova</span>
+              <span class="skill-tag">React Native</span>
+              <span class="skill-tag">PWA</span>
+              <span class="skill-tag">Responsive Design</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3><i class="fas fa-microchip"></i> IoT & Others</h3>
+            <div class="skills-list">
+              <span class="skill-tag">Arduino</span>
+              <span class="skill-tag">Raspberry Pi</span>
+              <span class="skill-tag">Sensor Integration</span>
+              <span class="skill-tag">Git</span>
+              <span class="skill-tag">UI/UX Design</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="section-container">
+        <div class="section-title">
+          <h2>My Projects</h2>
+          <p>Some of my recent work that I'm proud of</p>
+        </div>
+        <div class="projects">
+          <div class="project-card">
+            <div class="project-img" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+            <div class="project-content">
+              <h3>Shop Inventory System</h3>
+              <p>Web-based inventory management system for tracking products, sales, and stock levels with real-time updates.</p>
+              <div class="project-links">
+                <a href="https://manuubett.github.io/Shop-inventory-/" class="btn" target="_blank">Live Demo</a>
+                <a href="#" class="btn btn-outline">Details</a>
+              </div>
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-img" style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+            <div class="project-content">
+              <h3>WinPredict App</h3>
+              <p>Sports prediction platform with advanced analytics, user engagement features, and real-time results.</p>
+              <div class="project-links">
+                <a href="https://manuubett.github.io/Winpredict/" class="btn" target="_blank">Live Demo</a>
+                <a href="#" class="btn btn-outline">Details</a>
+              </div>
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-img" style="background-image: url('https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+            <div class="project-content">
+              <h3>Mchango Tracker</h3>
+              <p>Fundraising tracker app with Firebase backend, real-time updates, and M-Pesa integration for seamless payments.</p>
+              <div class="project-links">
+                <a href="https://github.com/Manuubett/mchango-tracker.git" class="btn" target="_blank">GitHub</a>
+                <a href="#" class="btn btn-outline">Details</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 3rem;">
+          <h3 style="color: var(--primary); margin-bottom: 1rem;">Johan Ngeno Website</h3>
+          <p style="margin-bottom: 1.5rem;">A personal apolitical website for Johan Ngeno with modern design and responsive layout.</p>
+          <a href="https://bett1298.github.io/Ngeno/" target="_blank" class="btn btn-secondary">Visit the Website</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="section-container">
+        <div class="section-title">
+          <h2>Contact Me</h2>
+          <p>Get in touch to discuss your project or just say hello</p>
+        </div>
+        <div class="contact-container">
+          <div class="contact-info">
+            <div class="contact-item">
+              <i class="fas fa-envelope"></i>
+              <div>
+                <h3>Email</h3>
+                <p>bettemanuel49@gmail.com</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-phone"></i>
+              <div>
+                <h3>Phone</h3>
+                <p>+254 797 612 155</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <div>
+                <h3>Location</h3>
+                <p>Nairobi, Kenya</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-clock"></i>
+              <div>
+                <h3>Availability</h3>
+                <p>Mon - Fri: 9am - 6pm</p>
+              </div>
+            </div>
+          </div>
+          <div class="contact-form">
+            <form id="contactForm">
+              <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Your Email</label>
+                <input type="email" id="email" required>
+              </div>
+              <div class="form-group">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" required>
+              </div>
+              <div class="form-group">
+                <label for="message">Your Message</label>
+                <textarea id="message" required></textarea>
+              </div>
+              <button type="submit" class="btn" style="width: 100%;">Send Message</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Bett</h3>
+          <p>Building innovative technology solutions to solve real-world problems.</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="https://wa.me/+254797612155" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <p><a href="#home" style="color: white; text-decoration: none;">Home</a></p>
+          <p><a href="#about" style="color: white; text-decoration: none;">About</a></p>
+          <p><a href="#skills" style="color: white; text-decoration: none;">Skills</a></p>
+          <p><a href="#projects" style="color: white; text-decoration: none;">Projects</a></p>
+        </div>
+        <div class="footer-section">
+          <h3>Contact Info</h3>
+          <p><i class="fas fa-envelope" style="margin-right: 10px;"></i> bettemanuel49@gmail.com</p>
+          <p><i class="fas fa-phone" style="margin-right: 10px;"></i> +254 797 612 155</p>
+          <p><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i> Nairobi, Kenya</p>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2025 Bett. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Splash screen functionality
+    window.addEventListener("load", function () {
+      const splash = document.getElementById("splash");
+      const main = document.getElementById("main");
+      setTimeout(() => {
+        splash.style.opacity = 0;
+        setTimeout(() => {
+          splash.style.display = 'none';
+          main.classList.add("visible");
+        }, 1000);
+      }, 2000);
+    });
+
+    // Mobile menu toggle
+    document.querySelector('.mobile-menu').addEventListener('click', function() {
+      document.querySelector('nav ul').classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', function() {
+        document.querySelector('nav ul').classList.remove('active');
+      });
+    });
+
+    // Form submission
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Thank you for your message! I will get back to you soon.');
+      this.reset();
+    });
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        if(targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if(targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
